@@ -26,7 +26,6 @@ class LedgerEntry:
         return new_dict
 
     def __str__(self):
-        #todo make this clean for the output
         date_col = f"{self.date}"
         name_col = f"  {self.name}" + (" " * (21 - len(self.name)))
         if self.amount < 0:
@@ -253,7 +252,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', '-i', required=True, help='Path to the input CSV file')
     parser.add_argument('--days', '-d', type=int, default=30, help='Number of days to forecast (default: 30)')
-    parser.add_argument('--balance', '-b', type=float, default=0.0, help='Starting balance (default: 0.00')
+    parser.add_argument('--start-balance', '-b', type=float, default=0.0, help='Starting balance (default: 0.00')
     parser.add_argument('--export', '-e', help='Optional path to export results as CSV')
 
     args = parser.parse_args()
@@ -267,7 +266,7 @@ def main():
     ledger = Ledger(
         csv_input=args.input,
         days=args.days,
-        starting_balance=args.balance
+        starting_balance=args.start_balance
     )
 
     ledger.run_loop()

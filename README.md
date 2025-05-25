@@ -43,25 +43,34 @@ To ensure clarity and focus, this tool **intentionally avoids** the following:
 The tool expects a CSV file like the following (sample provided in this repo):
 
 ```csv
-name,type,amount,frequency,next_date
-Paycheck,income,2500,biweekly,2025-05-10
-Rent,expense,1200,monthly,2025-05-01
-Internet,expense,60,monthly,2025-05-05
+name,transaction_type,amount,frequency,next_date
+Paycheck,income,1000,biweekly,2025-05-02
+Internet,expense,50,monthly,2025-05-01
+Electric,expense,200,monthly,2025-05-01
 ```
-## 🖥️ Usage (Coming Soon)
+
+### Acceptable Frequencies
+"daily", "weekly", "biweekly", "monthly", "quarterly", "semiyearly", "yearly"
+
+## 🖥️ Usage
 
 ```bash
 python forecast.py --input sample_input.csv --days 60
 ```
 
+### How to Run:
+pip install -r requirements.txt\
+python forecast.py ...
+
+
 ### Optional:
 --export forecast.csv → saves results to CSV
 
---start-balance 2000 → sets starting balance manually
+--start-balance 2000.00 → sets starting balance manually
 
 ## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## 🙋‍♂️ Author
-Developed by Dustin Pike\
+Developed by Hexvaris\
 Open to feedback, improvements, or extensions.

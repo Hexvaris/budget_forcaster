@@ -1,0 +1,4 @@
+name,transaction_type,amount,frequency,next_date
+Paycheck,income,1000,biweekly,2025-05-02
+Internet,expense,50,monthly,2025-05-01
+Electric,expense,200,monthly,2025-05-01

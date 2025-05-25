@@ -7,7 +7,7 @@ import csv
 # Constants
 REQUIRED_INPUT_FIELDS = {'name', 'frequency', 'next_date', 'amount', 'transaction_type'}
 DEFAULT_COLUMN_SIZE = 12
-COLUMN_BUFFER = 2
+COLUMN_BUFFER = 4
 
 class LedgerEntry:
     def __init__(self, date, name, amount, balance):
@@ -222,15 +222,23 @@ class Ledger:
         max_name = self.get_max_column_size('name') + COLUMN_BUFFER
         max_amount = self.get_max_column_size('amount') + COLUMN_BUFFER
         max_balance = self.get_max_column_size('balance') + COLUMN_BUFFER
-        header = f"{'Date':<{max_date}}{'Name':<{max_name}}{'Amount':<{max_amount}}{'Balance':<{max_balance}}"
+        header_date = "Date".ljust(max_date)
+        header_name = "Name".ljust(max_name)
+        # Add 1 for the $
+        header_amount = "Amount".rjust(max_amount + 1)
+        # Add 3 for spacing and $
+        header_balance = "Balance".rjust(max_balance + 3)
+        # header = f"{'Date':<{max_date}}{'Name':<{max_name}}{'Amount':>{max_amount}}{'Balance':>{max_balance}}"
+        header = f"{header_date}{header_name}{header_amount}{header_balance}"
+
         separator = '-' * len(header)
         print(header)
         print(separator)
         for log in self.transaction_log:
-            print(f"{log.date.strftime('%Y-%m-%d'):<12}", end='')
+            print(f"{log.date.strftime('%Y-%m-%d'):<{max_date}}", end='')
             print(f"{log.name:<{max_name}}", end='')
-            print(f"${log.amount:>{max_amount}}", end='')
-            print(f"${log.balance:>{max_balance}}")
+            print(f"${log.amount:>{max_amount},.2f}", end='')
+            print(f"  ${log.balance:>{max_balance},.2f}")
 
     def run_loop(self):
         while self.is_active():

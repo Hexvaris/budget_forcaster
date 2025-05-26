@@ -64,7 +64,7 @@ python forecast.py ...
 
 
 ### Optional:
-(In Development) --export forecast.csv → saves results to CSV
+--export .\forecast.csv → saves results to CSV
 
 --start-balance 2000.00 → sets starting balance manually
 

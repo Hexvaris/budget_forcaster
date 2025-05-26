@@ -239,6 +239,19 @@ class Ledger:
             print(f"${log.amount:>{max_amount},.2f}", end='')
             print(f"  ${log.balance:>{max_balance},.2f}")
 
+    def export_ledger(self, path):
+        ledger_data: list[dict] = [entry.to_dict() for entry in self.transaction_log]
+        field_names = ledger_data[0].keys()
+        try:
+            with open(path, 'w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=field_names)
+                writer.writeheader()
+                writer.writerows(ledger_data)
+        except FileNotFoundError:
+            exit_application("Unable to write to the export location")
+        except Exception as e:
+            exit_application(f"An unexpected error occurred: {e}")
+
     def run_loop(self):
         while self.is_active():
             transaction_list = self.get_transactions_for_day()
@@ -271,6 +284,8 @@ def main():
 
     ledger.run_loop()
     ledger.print_ledger()
+    if args.export:
+        ledger.export_ledger(args.export)
 
 
 def exit_application(message: str, code=1) -> None:
@@ -279,9 +294,3 @@ def exit_application(message: str, code=1) -> None:
 
 if __name__ == '__main__':
     main()
-
-
-# Input file: data.csv
-# Forecast range: 60 days
-# Starting balance: 2000.0
-# Exporting to: results.csv
